@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Minimal Lambda function (no triggers) for runtime upgrade lab
+Parameters:
+  FunctionName:
+    Type: String
+    Default: lab-renata-python
+  LambdaExecutionRoleArn:
+    Type: String
+    Description: ARN of the IAM role for Lambda execution (AWSLambdaBasicExecutionRole attached)
+  RuntimeVersion:
+    Type: String
+    Default: python3.9
+Resources:
+  LabFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref FunctionName
+      Handler: lambda_function.handler
+      Role: !Ref LambdaExecutionRoleArn
+      Runtime: !Ref RuntimeVersion
+      MemorySize: 128
+      Timeout: 3
+      PackageType: Zip
+      Code:
+        ZipFile: |
+          import json
+          import sys
+          import platform
+          def handler(event, context):
+              return {
+                  "statusCode": 200,
+                  "headers": {"Content-Type": "application/json"},
+                  "body": json.dumps({
+                      "message": "Hello from Inline ZipFile!",
+                      "python_version": sys.version,
+                      "platform": platform.platform(),
+                  }),
+              }

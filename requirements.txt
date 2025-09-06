@@ -1,0 +1,1 @@
+# Mantido vazio para reduzir build e custos; adicione libs se necessário.
