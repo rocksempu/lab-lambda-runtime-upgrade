@@ -1,0 +1,23 @@
+name: Propose runtime upgrade
+
+on:
+  workflow_dispatch:
+
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Atualizar runtime no template
+        run: |
+          sed -i 's/python3.9/python3.13/g' template.yaml
+
+      - name: Criar Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Upgrade runtime para Python 3.13"
+          branch: runtime-upgrade-3-13
+          title: "Upgrade runtime: Python 3.9 → 3.13"
+          body: "PR automático para atualizar o runtime da Lambda."
