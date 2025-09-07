@@ -9,7 +9,7 @@ Parameters:
     Description: ARN of the IAM role for Lambda execution (AWSLambdaBasicExecutionRole attached)
   RuntimeVersion:
     Type: String
-    Default: python3.13
+    Default: python3.9
 Resources:
   LabFunction:
     Type: AWS::Lambda::Function
